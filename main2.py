@@ -28,16 +28,16 @@ def main():
     x2 = 2
     E = 10e-7
     x=np.array([x1,x2])
-    
+
     stime = time.time()
     res = gd.GradDown(fx, fpx1, fpx2, x, E)
     t = time.time() - stime
     print_res("Наискорейший градиентный спуск",res[0], res[1], res[2], t)
 
-    start_time = time.time()
+    s2time = time.time()
     res = minimize(fx, x, method='Nelder-Mead', options={'xatol':E})
-    t = time.time() - start_time
-    print_res("Нелдер-Мид",res.x, res.fun, res.nit, t)
+    t2 = time.time() - s2time
+    print_res("Нелдер-Мид",res.x, res.fun, res.nit, t2)
     #draw2(result[0], result[1], fx(result))
 
 main()
