@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def draw(ymin, ymax, xmin, xmax):
+def draw1(ymin, ymax, xmin, xmax):
     x = np.linspace(xmin, xmax, 500)
 
     y =  (np.log(x)/x)**3
@@ -29,7 +29,39 @@ def draw(ymin, ymax, xmin, xmax):
     fig.savefig('lab02_part01.png', dpi=500)
     # show the plot
     plt.show()
+def draw2(x1_p,x2_p,fx):
+    # установим размер графика
+    fig = plt.figure(figsize = (12,10))
+    
+    # создадим последовательность из 1000 точек в интервале от -5 до 5
+    # для осей x1 и x2
+    x1 = np.linspace(-5, 5, 1000)
+    x2 = np.linspace(-5, 5, 1000)
+    
+    # создадим координатную плоскость из осей w1 и w2
+    x1, x2 = np.meshgrid(x1, x2)
+    
+    # пропишем функцию
+    f = 1 - 2*x1 - 2*x2 - 4*x1*x2 + 10*(x1**2) + 2*(x2**2)
 
-
+    
+    # создадим трехмерное пространство
+    ax = fig.add_subplot(projection = '3d')
+    
+    # выведем график функции, alpha задает прозрачность
+    ax.plot_surface(x1, x2, f, alpha = 0.4, cmap = 'Blues')
+    
+    # выведем точку A с координатами (3, 4, 25) и подпись к ней
+    ax.scatter(x1_p, x2_p, fx, c = 'red', marker = '^', s = 100)
+    ax.text(x1_p, x2_p, fx, 'A', size = 25)
+    
+    
+    # укажем подписи к осям
+    ax.set_xlabel('x1', fontsize = 15)
+    ax.set_ylabel('x2', fontsize = 15)
+    ax.set_zlabel('f(x1, x2)', fontsize = 15)
+    
+    # выведем результат
+    plt.show()
 #draw(-0.4, 0.075, 0, 10)
-draw(-1, 1, 0, 5)
+# draw(-1, 1, 0, 5)

@@ -1,9 +1,11 @@
 import methods as m
 import numpy as np
 from scipy.optimize import minimize
+from graph import draw2
+import time
 
 # Функция
-def fx(X):
+def fx(x):
     x1, x2 = x
     return 1 - 2*x1 - 2*x2 - 4*x1*x2 + 10*(x1**2) + 2*(x2**2)
 
@@ -23,9 +25,9 @@ def Calculate(v, gradient, lambd):
 def MakeSimplefx(x, grad, xj):
     gx1, gx2 = grad
     jx1, jx2 =xj
-    vx = jx1-x*gx1
-    vy = jx2-x*gx2
-    return fx(np.array([vx, vy]))
+    v1 = jx1-x*gx1
+    v2 = jx2-x*gx2
+    return fx(np.array([v1, v2]))
 
 
 def GoldenSelection(a, b, eps, gradient, x):
@@ -56,50 +58,36 @@ def GoldenSelection(a, b, eps, gradient, x):
 
 
 def GradDown(x, eps):
-    current = x
+    current = np.copy(x)
     i=1
     while True:
-        
-        last = current
+        flast =  fx(current)
         grad = gradient(current)
-        lambd = GoldenSelection(0, 0.05, eps, grad, current)
+        lambd = GoldenSelection(0, 1, eps, grad, current)
         current = Calculate(current, grad, lambd)
-        i=i+1
-       
-        if (abs(fx(current)-fx(last)) < eps):
-            print("Iterations:"+str(i)+" f(x)=" +str(fx(current)))
+        fcur = fx(current)
+        if (abs(fcur-flast) < eps):
+            print("Iterations:"+str(i)+" f(x)=" +str(fcur))
             return current
-
-
-# Тело главной функции
-
-
-
-x = np.zeros(2, dtype=float)
-
-
-def test(t, y, e):
-    # Начальная точка поиска минимума функции
-    x[0] = t
-    x[1] = y
-    xtol = e  # Точность поиска экстремума
-    # Находим минимум функции
-    # Нелдер-Мид
-    minimize(fx, x, method='Nelder-Mead', options={'disp': True})
-
+        i=i+1
 
 def main():
     # x1 = input("Введите x1: ")
     # x2 = input("Введите x2: ")
     # E = input("Введите E: ")
-    x1 = -10
-    x2 = 1
-    E = 0.00001
-    x[0]=x1
-    x[1]=x2
+    x1 = 2
+    x2 = 2
+    E = 10e-7
+    x=np.array([x1,x2])
+    start_time = time.time()
     result = GradDown(x, E)
+    print("--- %s seconds ---" % (time.time() - start_time))
     print("Результат: x1 = " + str(result[0]) + " x2 = " + str(result[1])+"\n")
-    test(x1, x2, E)
-
+    start_time = time.time()
+    # x=np.array([-5,-5])
+    res = minimize(fx, x, method='Nelder-Mead', options={'xatol':E})
+    print(res)
+    print("--- %s seconds ---" % (time.time() - start_time))
+    draw2(result[0], result[1], fx(result))
 
 main()

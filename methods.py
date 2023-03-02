@@ -45,9 +45,7 @@ def newton(a, b, E):
         x = b
     i = 1
     x_res = x
-    while True:
-        if (abs(fp(x)) < E):
-            break
+    while (abs(fp(x)) < E):
         x_res = x
         x = x - fp(x)/fp2(x)
         i = i+1
@@ -104,4 +102,4 @@ def fp2(x):
     res = (6*(m.log(x))-21*(m.log(x))**2+12*(m.log(x))**3)/(x**5)
     return res
 
-newton(2, 3, 0.0001)
+print(newton(2, 3, 0.0001))
