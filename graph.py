@@ -17,7 +17,7 @@ def draw1(ymin, ymax, xmin, xmax):
     ax.xaxis.set_ticks_position('bottom')
     ax.yaxis.set_ticks_position('left')
     ax.grid(True)
-
+    plt.xticks(np.arange(0,100,5)) 
     # plot the functions, with labels
     plt.plot(x, y, 'c-', label='y=(ln(x)/x)^3')
     plt.ylim([-ymax, ymax])
@@ -26,7 +26,7 @@ def draw1(ymin, ymax, xmin, xmax):
     fig = plt.gcf()  # Взять текущую фигуру
     fig.set_size_inches(15, 15)  # Задать размеры графика
     fig.tight_layout(pad=5.0)
-    fig.savefig('lab02_part01.png', dpi=500)
+    fig.savefig('lab02_part01.png', dpi=1500)
     # show the plot
     plt.show()
 def draw2(x1_p,x2_p,fx):
@@ -63,5 +63,5 @@ def draw2(x1_p,x2_p,fx):
     
     # выведем результат
     plt.show()
-#draw(-0.4, 0.075, 0, 10)
+#draw1(-100, 100, 0, 100)
 # draw(-1, 1, 0, 5)

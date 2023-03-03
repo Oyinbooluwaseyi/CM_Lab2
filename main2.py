@@ -3,6 +3,7 @@ from scipy.optimize import minimize
 from graph import draw2
 import grad_down as gd
 import time
+
 def print_res(text, x, y, i, t):
     print("----"+text+"----")
     print("x: "+str(x)+"\nf(x) = "+str(y)+"\nIterations: "+str(i)+"\nTime: " +str(t)+" seconds\n")
@@ -26,9 +27,12 @@ def main():
     # E = input("Введите E: ")
     x1 = 2
     x2 = 2
-    E = 10e-7
+    E = 10**(-7)
     x=np.array([x1,x2])
-
+    # for e in range(1,6):
+    #     E = 10**(-(e+1))
+    print("E="+str(E))
+        
     stime = time.time()
     res = gd.GradDown(fx, fpx1, fpx2, x, E)
     t = time.time() - stime
